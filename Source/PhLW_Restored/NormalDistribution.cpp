@@ -2,6 +2,8 @@
 
 
 #include "NormalDistribution.h"
+#include "Misc/FileHelper.h"
+#include "HAL/PlatformFilemanager.h"
 
 float UNormalDistribution::MarsagliaPolarMethod(const float mathExpct, const float stdDev) {
 
@@ -25,4 +27,26 @@ float UNormalDistribution::MarsagliaPolarMethod(const float mathExpct, const flo
         return mathExpct + stdDev * u * s;
     }
 
+}
+
+bool UNormalDistribution::ExportStringArray(FString ExportDirectory, FString Filename, TArray<FString> StringArray, bool AllowOverWriting = true) 
+{
+    ExportDirectory += "\\";
+    ExportDirectory += Filename;
+    if (!AllowOverWriting) {
+        if (FPlatformFileManager::Get().GetPlatformFile().FileExists(*ExportDirectory)) 
+        {
+            return false;
+        }
+
+    }
+
+    FString FinalString = "";
+    for (FString& Each : StringArray)
+    {
+        FinalString += Each;
+        FinalString += LINE_TERMINATOR;
+    }
+
+    return FFileHelper::SaveStringToFile(FinalString, *ExportDirectory);
 }

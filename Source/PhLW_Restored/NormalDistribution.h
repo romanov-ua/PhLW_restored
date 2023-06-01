@@ -13,7 +13,10 @@ UCLASS()
 class PHLW_RESTORED_API UNormalDistribution : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-		UFUNCTION(BlueprintCallable)
+		UFUNCTION(BlueprintCallable, Category = "Custom")
 		static float MarsagliaPolarMethod(const float mathExpct, const float stdDev);
+
+		UFUNCTION(BlueprintCallable, Category ="Custom")
+		static bool ExportStringArray(FString ExportDirectory, FString Filename, TArray<FString> StringArray, bool AllowOverWriting);
 	
 };
